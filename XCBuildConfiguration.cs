@@ -13,10 +13,10 @@ namespace UnityEditor.XCodeEditor
 		protected const string OTHER_LD_FLAGS_KEY = "OTHER_LDFLAGS";
 		protected const string GCC_ENABLE_CPP_EXCEPTIONS_KEY = "GCC_ENABLE_CPP_EXCEPTIONS";
 		protected const string GCC_ENABLE_OBJC_EXCEPTIONS_KEY = "GCC_ENABLE_OBJC_EXCEPTIONS";
-
+		
 		public XCBuildConfiguration( string guid, PBXDictionary dictionary ) : base( guid, dictionary )
 		{
-			
+			internalNewlines = true;
 		}
 		
 		public PBXDictionary buildSettings {
@@ -45,9 +45,7 @@ namespace UnityEditor.XCodeEditor
 			foreach( string path in paths ) {
 				string currentPath = path;
 				if( recursive && !path.EndsWith( "/**" ) )
-					currentPath += "/**";
-				
-//				Debug.Log( "adding: " + currentPath );
+					currentPath += "**";
 				if( !((PBXDictionary)_data[BUILDSETTINGS_KEY]).ContainsKey( key ) ) {
 					((PBXDictionary)_data[BUILDSETTINGS_KEY]).Add( key, new PBXList() );
 				}
@@ -57,7 +55,6 @@ namespace UnityEditor.XCodeEditor
 					((PBXDictionary)_data[BUILDSETTINGS_KEY])[key] = list;
 				}
 				
-				currentPath = "\\\"" + currentPath + "\\\"";
 				
 				if( !((PBXList)((PBXDictionary)_data[BUILDSETTINGS_KEY])[key]).Contains( currentPath ) ) {
 					((PBXList)((PBXDictionary)_data[BUILDSETTINGS_KEY])[key]).Add( currentPath );
@@ -77,10 +74,10 @@ namespace UnityEditor.XCodeEditor
 		{
 			return this.AddSearchPaths( paths, LIBRARY_SEARCH_PATHS_KEY, recursive );
 		}
-
-		public bool AddFrameworkSearchPaths(PBXList paths, bool recursive = true)
+		
+		public bool AddFrameworkSearchPaths( PBXList paths, bool recursive = true )
 		{
-			return this.AddSearchPaths(paths, FRAMEWORK_SEARCH_PATHS_KEY, recursive);
+			return this.AddSearchPaths( paths, FRAMEWORK_SEARCH_PATHS_KEY, recursive );
 		}
 		
 		public bool AddOtherCFlags( string flag )
