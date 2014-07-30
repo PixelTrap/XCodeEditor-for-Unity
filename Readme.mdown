@@ -1,4 +1,4 @@
-# XCode Editor for Unity
+# XCode Editor for Unity (modified by Pixel Trap)
 
 ## OVERVIEW
 
