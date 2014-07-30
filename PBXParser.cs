@@ -10,7 +10,7 @@ namespace UnityEditor.XCodeEditor
 {
     public class PBXParser
     {
-        public const string PBX_HEADER_TOKEN = "// !$*UTF8*$!\n";
+        public const string PBX_HEADER_TOKEN = "// !$*UTF8*$!";
         public const char WHITESPACE_SPACE = ' ';
         public const char WHITESPACE_TAB = '\t';
         public const char WHITESPACE_NEWLINE = '\n';
@@ -53,7 +53,7 @@ namespace UnityEditor.XCodeEditor
         {
             indent = 0;
 
-            StringBuilder builder = new StringBuilder( PBX_HEADER_TOKEN, BUILDER_CAPACITY );
+            StringBuilder builder = new StringBuilder( PBX_HEADER_TOKEN + "\n", BUILDER_CAPACITY );
             bool success = SerializeValue( pbxData, builder);
 
             return ( success ? builder.ToString() : null );
